@@ -1,10 +1,28 @@
 # Event Management System
 
-This is a learning project: an organizer can publish events, and attendees can reserve a place. It uses Python, Flask, SQLite, HTML, and CSS.
+A full-stack event management application built with **Python, Flask, SQLite, HTML, and CSS**. Organizers can publish events and manage attendee lists; visitors can browse events and reserve a place.
 
-## Start the app on Windows
+## Features
 
-Open Command Prompt in the project folder and run these commands:
+- Browse upcoming events and view event details
+- Organizer sign-in and event dashboard
+- Create, edit, and delete events
+- Register attendees and prevent duplicate registrations
+- Enforce event capacity during registration
+- View the guest list for each event
+
+## Technology
+
+| Layer | Technology |
+| --- | --- |
+| Server | Python 3, Flask |
+| Database | SQLite |
+| User interface | HTML templates, CSS |
+| Production server command | Gunicorn (`Procfile`) |
+
+## Run locally on Windows
+
+Open Command Prompt in the project folder and run:
 
 ```cmd
 python -m venv .venv
@@ -13,26 +31,36 @@ pip install -r requirements.txt
 python app.py
 ```
 
-Then open <http://127.0.0.1:5000>. The `Procfile` and `gunicorn` dependency provide the production start command for a hosting service.
+Open <http://127.0.0.1:5000> in a browser. The SQLite database is created automatically at `instance/events.db`.
 
-Demo organizer sign-in: `organizer` / `event123`.
+**Demo organizer account:** `organizer` / `event123`
 
-## What it can do
+## How the app works
 
-- Show upcoming events and event details
-- Let an organizer create, edit, and delete events
-- Let attendees register, while checking capacity and duplicate emails
-- Show an organizer the attendee list
+Flask routes receive browser requests, validate form data, query SQLite, and render templates. Events and registrations are stored in separate tables:
 
-## Where to look in the code
+```text
+events (id, title, description, location, event_date, capacity)
+  └── registrations (id, event_id, attendee_name, attendee_email)
+```
 
-- `app.py` contains the Flask routes and database queries.
-- `templates/` contains the HTML pages.
-- `static/style.css` contains the page styling.
-- `instance/events.db` is created automatically when the app starts.
+One event can have many registrations. Each registration references its event through `event_id`. A database uniqueness constraint prevents the same email from registering for the same event twice. The registration route checks capacity and inserts the registration in a write transaction.
 
-Read [LEARNING_GUIDE.md](LEARNING_GUIDE.md) before using the project in an interview. It walks through the database relationship and the code path for registration, and lists the current limitations honestly.
+## Project structure
 
-## Demo-only note
+```text
+app.py                 Flask routes, validation, and database access
+templates/             HTML pages rendered by Flask
+static/style.css       Page styles
+requirements.txt       Python dependencies
+Procfile               Gunicorn start command for hosting
+LEARNING_GUIDE.md      Walkthrough of the data model and registration flow
+```
 
-The organizer account and secret key have local development defaults. This setup is for learning on your own computer, not for deploying publicly.
+## Current scope and next steps
+
+This is a learning and portfolio project. It currently uses one demo organizer account; attendees do not need accounts. Email confirmations and payment processing are not included. The local SQLite database is excluded from the Git repository.
+
+Before a public deployment, configure a private `SECRET_KEY` and organizer credentials through environment variables. Use persistent storage for the database, or move it to a hosted database, because local SQLite files may not persist on a hosting service. Further improvements could include automated tests, CSRF protection, and support for multiple organizer accounts.
+
+For an interview walkthrough, see [LEARNING_GUIDE.md](LEARNING_GUIDE.md).
