@@ -2,11 +2,18 @@
 
 This is a learning project: an organizer can publish events, and attendees can reserve a place. It uses Python, Flask, SQLite, HTML, and CSS.
 
-## Start the app
+## Start the app on Windows
 
-On Windows, double-click `run.bat`. On the first launch it creates a Python virtual environment and installs Flask. Later, it starts the app directly and opens the browser. Keep the command window open while using the app.
+Open Command Prompt in the project folder and run these commands:
 
-The `Procfile` and `gunicorn` dependency provide the production start command for a hosting service.
+```cmd
+python -m venv .venv
+.venv\Scripts\activate
+pip install -r requirements.txt
+python app.py
+```
+
+Then open <http://127.0.0.1:5000>. The `Procfile` and `gunicorn` dependency provide the production start command for a hosting service.
 
 Demo organizer sign-in: `organizer` / `event123`.
 
