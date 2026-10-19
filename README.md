@@ -18,7 +18,7 @@ A full-stack event management application built with **Python, Flask, SQLite, HT
 | Server | Python 3, Flask |
 | Database | SQLite |
 | User interface | HTML templates, CSS |
-| Production server command | Gunicorn (`Procfile`) |
+| Production server | Gunicorn |
 
 ## Run locally on Windows
 
@@ -34,6 +34,15 @@ python app.py
 Open <http://127.0.0.1:5000> in a browser. The SQLite database is created automatically at `instance/events.db`.
 
 **Demo organizer account:** `organizer` / `event123`
+
+## Deploying to Render
+
+When creating a Python web service, use these settings:
+
+- **Build command:** `pip install -r requirements.txt`
+- **Start command:** `gunicorn app:app`
+
+Configure a private `SECRET_KEY` and organizer credentials in the service's environment variables before deployment.
 
 ## How the app works
 
@@ -53,7 +62,6 @@ app.py                 Flask routes, validation, and database access
 templates/             HTML pages rendered by Flask
 static/style.css       Page styles
 requirements.txt       Python dependencies
-Procfile               Gunicorn start command for hosting
 LEARNING_GUIDE.md      Walkthrough of the data model and registration flow
 ```
 
@@ -61,6 +69,6 @@ LEARNING_GUIDE.md      Walkthrough of the data model and registration flow
 
 This is a learning and portfolio project. It currently uses one demo organizer account; attendees do not need accounts. Email confirmations and payment processing are not included. The local SQLite database is excluded from the Git repository.
 
-Before a public deployment, configure a private `SECRET_KEY` and organizer credentials through environment variables. Use persistent storage for the database, or move it to a hosted database, because local SQLite files may not persist on a hosting service. Further improvements could include automated tests, CSRF protection, and support for multiple organizer accounts.
+Use persistent storage for the database, or move it to a hosted database, because local SQLite files may not persist on a hosting service. Further improvements could include automated tests, CSRF protection, and support for multiple organizer accounts.
 
 For an interview walkthrough, see [LEARNING_GUIDE.md](LEARNING_GUIDE.md).
