@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Discover events{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="hero-copy"><span class="eyebrow"><span class="pulse"></span> YOUR CITY, YOUR PEOPLE</span><h1>Make room for<br><em>something good.</em></h1><p>Find the gatherings, ideas and people that make your week a little brighter.</p><a href="#upcoming" class="button button-dark">Explore events <span>↘</span></a></div>
+  <div class="hero-art" aria-label="Abstract illustration of a gathering"><div class="art-sun"></div><div class="art-orbit orbit-one"></div><div class="art-orbit orbit-two"></div><div class="art-card"><span>GOOD PEOPLE</span><strong>Better<br>together.</strong><small>EST. EVERY DAY</small></div><div class="art-dot dot-one"></div><div class="art-dot dot-two"></div><span class="art-note">✳ LET'S MEET</span></div>
+</section>
+<section id="upcoming" class="events-section">
+  <div class="section-heading"><div><span class="eyebrow muted">THE GOOD STUFF</span><h2>Coming up <span>for you.</span></h2></div><span class="event-count">{{ events|length }} upcoming {{ 'event' if events|length == 1 else 'events' }}</span></div>
+  {% if events %}<div class="event-grid">{% for event in events %}<article class="event-card"><div class="event-top"><div class="date-tile"><span>{{ event.event_date[8:10] }}</span><small>{{ event.event_date[5:7] }}/{{ event.event_date[:4] }}</small></div><span class="tag">OPEN TO ALL</span></div><div class="event-card-body"><h3>{{ event.title }}</h3><p class="event-description">{{ event.description|truncate(110) }}</p><div class="event-meta"><span>⌖ {{ event.location }}</span><span>◷ {{ event.event_date[11:16] }}</span></div></div><div class="event-card-bottom"><span>{{ event.capacity - event.registration_count }} spots left</span><a href="{{ url_for('event_detail', event_id=event.id) }}">See event <span>↗</span></a></div></article>{% endfor %}</div>{% else %}<div class="empty-state"><span class="empty-icon">✳</span><h3>It’s a little quiet here.</h3><p>New events will show up as soon as an organizer adds one.</p><a href="{{ url_for('login') }}" class="text-link">Are you an organizer? Sign in →</a></div>{% endif %}
+</section>
+<section class="organizer-callout"><div class="callout-icon">✳</div><div><span class="eyebrow">HAVE SOMETHING IN MIND?</span><h2>Bring people together.</h2><p>Create your event and let the right people find it.</p></div><a href="{{ url_for('login') }}" class="button button-outline">Organize an event <span>↗</span></a></section>
+{% endblock %}

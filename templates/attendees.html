@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block title %}Guest list · {{ event.title }}{% endblock %}
+{% block content %}
+<a class="back-link" href="{{ url_for('dashboard') }}">← Dashboard</a><section class="dashboard-header"><div><span class="eyebrow muted">GUEST LIST</span><h1>{{ event.title }}</h1><p>{{ people|length }} registered {{ 'guest' if people|length == 1 else 'guests' }} · Capacity {{ event.capacity }}</p></div><a class="button button-light" href="{{ url_for('edit_event', event_id=event.id) }}">Edit event</a></section>
+{% if people %}<div class="table-wrap"><table><thead><tr><th>NAME</th><th>EMAIL</th><th>REGISTERED</th></tr></thead><tbody>{% for person in people %}<tr><td>{{ person.attendee_name }}</td><td>{{ person.attendee_email }}</td><td>{{ person.registered_at }}</td></tr>{% endfor %}</tbody></table></div>{% else %}<div class="empty-state"><span class="empty-icon">◎</span><h3>No one has registered yet.</h3><p>Share the event page to invite your first guests.</p><a class="text-link" href="{{ url_for('event_detail', event_id=event.id) }}">View public event →</a></div>{% endif %}
+{% endblock %}
