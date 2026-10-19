@@ -4,7 +4,7 @@ import os
 import sqlite3
 import threading
 import webbrowser
-from datetime import datetime
+from datetime import datetime, timedelta
 from functools import wraps
 from pathlib import Path
 
@@ -19,7 +19,8 @@ app = Flask(__name__)
 app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", "local-development-key-change-me")
 app.config["ORGANIZER_USERNAME"] = os.environ.get("ORGANIZER_USERNAME", "organizer")
 app.config["ORGANIZER_PASSWORD_HASH"] = os.environ.get(
-    "ORGANIZER_PASSWORD_HASH", generate_password_hash("event123")
+    "ORGANIZER_PASSWORD_HASH",
+    generate_password_hash(os.environ.get("ORGANIZER_PASSWORD", "event123")),
 )
 
 
@@ -67,6 +68,23 @@ def initialize_database():
         """
     )
     db.commit()
+    # A fresh hosted demo should have an event to show on its public home page.
+    # Existing databases are left as they are.
+    if db.execute("SELECT COUNT(*) FROM events").fetchone()[0] == 0:
+        sample_date = (datetime.now() + timedelta(days=14)).strftime("%Y-%m-%dT%H:%M")
+        db.execute(
+            """INSERT INTO events
+               (title, description, location, event_date, capacity)
+               VALUES (?, ?, ?, ?, ?)""",
+            (
+                "Sample Event: Community Tech Meetup",
+                "A sample listing to demonstrate event discovery and attendee registration.",
+                "Community Hall",
+                sample_date,
+                40,
+            ),
+        )
+        db.commit()
 
 
 @app.before_request

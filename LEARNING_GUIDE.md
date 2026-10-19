@@ -55,8 +55,10 @@ Good answers should be based on the code you can point to. For question 5, reaso
 ## Be clear about the current scope
 
 - There is one demo organizer account, configured for local use.
+- A new empty database gets one sample event for the public demo page.
 - Attendees do not create accounts; their email identifies a registration.
 - There are no email confirmations or payment processing.
-- This is a local learning app, not a deployed production service.
+- The Render demo uses a generated organizer password and temporary local storage; event changes can reset when the service restarts.
+- This is a learning app, not a production event service.
 
 These are limits of the current version, not things to hide. You can explain what you would build next and why.

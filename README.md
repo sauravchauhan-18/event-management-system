@@ -33,16 +33,15 @@ python app.py
 
 Open <http://127.0.0.1:5000> in a browser. The SQLite database is created automatically at `instance/events.db`.
 
-**Demo organizer account:** `organizer` / `event123`
+**Local demo organizer account:** `organizer` / `event123`
 
-## Deploying to Render
+## Public demo deployment
 
-When creating a Python web service, use these settings:
+The [`render.yaml`](render.yaml) file describes a free Render web service. To deploy, create a Blueprint in Render and connect this GitHub repository. Render reads the build and start commands from that file and provides a public URL.
 
-- **Build command:** `pip install -r requirements.txt`
-- **Start command:** `gunicorn app:app`
+On a fresh database, the app adds one sample event so the home page has something to show. The organizer username is `organizer`; Render generates the password and stores it in the service's `ORGANIZER_PASSWORD` environment variable. Keep that password private.
 
-Configure a private `SECRET_KEY` and organizer credentials in the service's environment variables before deployment.
+The free web service uses temporary local storage, so event and registration changes can reset after a restart or redeploy. Use a persistent database for a long-running service with data that must be retained.
 
 ## How the app works
 
@@ -62,6 +61,7 @@ app.py                 Flask routes, validation, and database access
 templates/             HTML pages rendered by Flask
 static/style.css       Page styles
 requirements.txt       Python dependencies
+render.yaml            Render service configuration
 LEARNING_GUIDE.md      Walkthrough of the data model and registration flow
 ```
 
