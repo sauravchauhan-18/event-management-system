@@ -2,6 +2,10 @@
 
 A full-stack event management application built with **Python, Flask, SQLite, HTML, and CSS**. Organizers can publish events and manage attendee lists; visitors can browse events and reserve a place.
 
+## Screenshot
+
+![Event Management System homepage](static/homepage-preview.png)
+
 ## Features
 
 - Browse upcoming events and view event details
