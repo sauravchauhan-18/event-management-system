@@ -6,6 +6,10 @@ A full-stack event management application built with **Python, Flask, SQLite, HT
 
 ![Event Management System homepage](static/homepage-preview.png)
 
+### Organizer sign-in
+
+![Organizer sign-in page](static/organizer-login-preview.png)
+
 ## Features
 
 - Browse upcoming events and view event details
